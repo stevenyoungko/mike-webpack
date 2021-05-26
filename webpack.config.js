@@ -18,10 +18,21 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: '[name].js'
+    filename: './js/[name].js'
   },
   module: {
     rules: [
+      {
+        test: /\.html$/,
+        use: [{
+          // 用file-loader 搬移檔案
+          loader: 'file-loader',
+          options: {
+            // 路徑 檔名 副檔名
+            name: '[path][name].[ext]'
+          }
+        }]
+      },
       {
         // 正則表達式 判斷副檔名
         test: /\.css$/,
