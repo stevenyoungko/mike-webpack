@@ -42,7 +42,13 @@ module.exports = {
           'css-loader',
           'postcss-loader' 
         ])
-      } 
+      },
+      {
+        test: /\.(sass|scss)$/,
+        use: extractCSS.extract([
+          'css-loader', 'postcss-loader', 'sass-loader'
+        ])
+      }
     ]
   },
   // plugins 就是在做loader做不到的事情
