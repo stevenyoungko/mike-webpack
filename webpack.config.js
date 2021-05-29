@@ -66,6 +66,10 @@ module.exports = {
         use: extractCSS.extract([
           'css-loader', 'postcss-loader', 'sass-loader'
         ])
+      },
+      {
+       test: /\.js$/,
+       use: 'babel-loader' 
       }
     ]
   },
@@ -77,3 +81,5 @@ module.exports = {
 
 
 // 註1 postcss是一個使用javascript轉換css的工具，搭配autoprefixer加入瀏覽器的prefix, 如：'-webkit-'、 '-moz-'
+// babel/core: 程式需要調用Babel的API進行編譯
+// babel/preset-env: 可以使用最新版本的JS然後去編譯。不用去理會哪些語法需要轉換
