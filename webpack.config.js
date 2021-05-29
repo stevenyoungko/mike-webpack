@@ -3,6 +3,7 @@ var path = require("path")
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var extractCSS = new ExtractTextPlugin('css/[name].css')
 var CopyPlugin = require("copy-webpack-plugin");
+var webpack = require('webpack')
 
 
 
@@ -130,7 +131,13 @@ module.exports = {
     // 專門搬移不會經過loader的plugins
     new CopyPlugin([
       { from: "assets", to: "assets" }
-    ])
+    ]),
+    // webpack內建方法 放在全域就不用檔案個別引入
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
+    })
   ]
 }
 

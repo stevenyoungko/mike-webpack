@@ -32,3 +32,7 @@ class Main {
 }
 
 new Main()
+
+console.log($('#box'))
+console.log(jQuery('#box'))
+console.log(window.jQuery('#box'))
