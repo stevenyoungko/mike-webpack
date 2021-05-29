@@ -1,7 +1,10 @@
 // 把 path 這個方法拿進來就可以調用它 
 var path = require("path")
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var extractCSS = new ExtractTextPlugin('css/[name].css');
+var extractCSS = new ExtractTextPlugin('css/[name].css')
+var CopyPlugin = require("copy-webpack-plugin");
+
+
 
 
 // nodejs 給我們的環境變數
@@ -123,7 +126,11 @@ module.exports = {
   },
   // plugins 就是在做loader做不到的事情
   plugins: [
-    extractCSS
+    extractCSS,
+    // 專門搬移不會經過loader的plugins
+    new CopyPlugin([
+      { from: "assets", to: "assets" }
+    ])
   ]
 }
 
