@@ -1,14 +1,14 @@
-import '../scss/index.scss';
-import '../index.html'
-import 'babel-polyfill'
+import 'index.scss';
+import 'index.html'
+// import 'babel-polyfill'
 
 let arr = [1,2,3]
-arr.map((obj) => console.log(obj))
+// arr.map((obj) => console.log(obj))
 
 var obj = require('./obj.js')
-console.log(obj)
+// console.log(obj)
 
-import item from './item.js'
+import item from 'item'
 console.log(item)
 
 
@@ -27,7 +27,7 @@ class Main {
   }
 
   logState = () => {
-    console.log(this.state.name)
+    // console.log(this.state.name)
   }
 }
 

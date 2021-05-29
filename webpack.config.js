@@ -13,12 +13,24 @@ module.exports = {
   mode: process.env.NODE_ENV,
   context: path.resolve(__dirname, './src'),
   entry: {
-    index: './js/index.js',
-    about: './js/about.js'
+    index: 'index.js',
+    about: 'about.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: './js/[name].js'
+  },
+  // resolve 在webpack加上resolve modules的設定在引入模塊的時候可以省略路徑
+  // extension設定可以省略副檔名
+  resolve: {
+    modules: [
+      path.resolve('src'),
+      path.resolve('src/js'),
+      path.resolve('src/js/object'),
+      path.resolve('src/scss'),
+      path.resolve('node_modules')
+    ],
+    extensions: ['.js']
   },
   devServer: {
     compress: true,
@@ -83,4 +95,4 @@ module.exports = {
 // 註1 postcss是一個使用javascript轉換css的工具，搭配autoprefixer加入瀏覽器的prefix, 如：'-webkit-'、 '-moz-'
 // babel/core: 程式需要調用Babel的API進行編譯
 // babel/preset-env: 可以使用最新版本的JS然後去編譯。不用去理會哪些語法需要轉換
-// babel/polyfill: 有些語法ie不支援，所以要用@babel/polyfill來解決 ie 的問
+// babel/polyfill: 有些語法ie不支援，所以要用@babel/polyfill來解決 ie 的問題
