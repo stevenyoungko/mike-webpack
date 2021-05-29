@@ -27,6 +27,7 @@ module.exports = {
       path.resolve('src'),
       path.resolve('src/js'),
       path.resolve('src/js/object'),
+      path.resolve('src/images'),
       path.resolve('src/scss'),
       path.resolve('node_modules')
     ],
@@ -75,14 +76,49 @@ module.exports = {
       },
       {
         test: /\.(sass|scss)$/,
-        use: extractCSS.extract([
-          'css-loader', 'postcss-loader', 'sass-loader'
-        ])
+        use: [
+          'style-loader','css-loader', 'postcss-loader', 'sass-loader'
+        ]
       },
       {
        test: /\.js$/,
        use: 'babel-loader' 
-      }
+      },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        // 把圖片轉成base64 要搭配style-loader使用
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              // ?hash做圖片快取 避免快取
+              name: '[path][name].[ext]?[hash:8]'
+            }
+          },
+          //圖片壓縮
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              },
+              // optipng.enabled: false will disable optipng
+              optipng: {
+                enabled: false,
+              },
+              pngquant: {
+                quality: [0.65, 0.90],
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false,
+              }
+            }
+          },
+        ]
+      },
     ]
   },
   // plugins 就是在做loader做不到的事情
@@ -96,3 +132,4 @@ module.exports = {
 // babel/core: 程式需要調用Babel的API進行編譯
 // babel/preset-env: 可以使用最新版本的JS然後去編譯。不用去理會哪些語法需要轉換
 // babel/polyfill: 有些語法ie不支援，所以要用@babel/polyfill來解決 ie 的問題
+// url-loader: 會將過小的圖片轉換成base64格式使用，來減少載入負擔
