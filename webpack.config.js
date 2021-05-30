@@ -89,17 +89,22 @@ module.exports = {
         use: extractCSS.extract([
           'css-loader',
           'postcss-loader' 
-        ])
+        ]),
+        include: path.resolve('src/css'),
+        exclude: path.resolve('./node_modules'),
       },
       {
         test: /\.(sass|scss)$/,
         use: [
           'style-loader','css-loader', 'postcss-loader', 'sass-loader'
-        ]
+        ],
+        include: path.resolve('src/scss'),
+        exclude: path.resolve('./node_modules'),
       },
       {
        test: /\.js$/,
-       use: 'babel-loader' 
+       use: 'babel-loader',
+       include: path.resolve('.')
       },
       {
         test: /\.(png|jpg|gif)$/i,
@@ -134,7 +139,9 @@ module.exports = {
               }
             }
           },
-        ]
+        ],
+        include: path.resolve('src/images'),
+        exclude: path.resolve('./node_modules'),
       },
     ]
   },
@@ -176,3 +183,7 @@ module.exports = {
 // babel/polyfill: 有些語法ie不支援，所以要用@babel/polyfill來解決 ie 的問題
 // url-loader: 會將過小的圖片轉換成base64格式使用，來減少載入負擔
 // html-webpack-plugin 可以透過模板的方式讓webpack幫我們產生html檔案，但首要先先準備一個模板
+
+// include 表示哪些目錄中的文件需要進行loader轉換
+// exclude 表示哪些目錄中的文件不需要進行loader轉換
+// 設置include和exclude可以提昇一定程度的打包效率
