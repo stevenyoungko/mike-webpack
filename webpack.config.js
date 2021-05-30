@@ -4,6 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var extractCSS = new ExtractTextPlugin('css/[name].css')
 var CopyPlugin = require("copy-webpack-plugin");
 var webpack = require('webpack')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 
@@ -57,17 +58,17 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.html$/,
-        use: [{
-          // 用file-loader 搬移檔案
-          loader: 'file-loader',
-          options: {
-            // 路徑 檔名 副檔名
-            name: '[path][name].[ext]'
-          }
-        }]
-      },
+      // {
+      //   test: /\.html$/,
+      //   use: [{
+      //     // 用file-loader 搬移檔案
+      //     loader: 'file-loader',
+      //     options: {
+      //       // 路徑 檔名 副檔名
+      //       name: '[path][name].[ext]'
+      //     }
+      //   }]
+      // },
       {
         // 正則表達式 判斷副檔名
         test: /\.css$/,
@@ -137,6 +138,21 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery'
+    }),
+    new HtmlWebpackPlugin({ 
+      title: 'Webpack前端自動化開發',
+      filename: 'index.html',
+      template: 'html/template.html',
+      viewport: 'width=device-width, initial-scale=1.0',
+      // 載入的js
+      chunks: ['index']
+    }),
+    new HtmlWebpackPlugin({ 
+      title: 'about',
+      filename: 'about.html',
+      template: 'html/template.html',
+      viewport: 'width=device-width, initial-scale=1.0',
+      chunks: ['about']
     })
   ]
 }
@@ -147,3 +163,4 @@ module.exports = {
 // babel/preset-env: 可以使用最新版本的JS然後去編譯。不用去理會哪些語法需要轉換
 // babel/polyfill: 有些語法ie不支援，所以要用@babel/polyfill來解決 ie 的問題
 // url-loader: 會將過小的圖片轉換成base64格式使用，來減少載入負擔
+// html-webpack-plugin 可以透過模板的方式讓webpack幫我們產生html檔案，但首要先先準備一個模板
