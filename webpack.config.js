@@ -56,6 +56,18 @@ module.exports = {
       warnings: false
     }
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /node_modules/,
+          name: 'vendor',
+          chunks: 'initial',
+          enforce: true
+        }
+      },
+    },
+  },
   module: {
     rules: [
       // {
@@ -145,14 +157,14 @@ module.exports = {
       template: 'html/template.html',
       viewport: 'width=device-width, initial-scale=1.0',
       // 載入的js
-      chunks: ['index']
+      chunks: ['vendor','index']
     }),
     new HtmlWebpackPlugin({ 
       title: 'about',
       filename: 'about.html',
       template: 'html/template.html',
       viewport: 'width=device-width, initial-scale=1.0',
-      chunks: ['about']
+      chunks: ['vendor','about']
     })
   ]
 }
